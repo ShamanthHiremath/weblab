@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Manager (Closure)</title>
+</head>
+<body>
+    <h3>Library Manager</h3>
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="author" placeholder="Author">
+    <button onclick="addBook()">Add</button>
+    <button onclick="getBooks()">Show All</button>
+    <button onclick="updateBook()">Update</button>
+    <button onclick="deleteBook()">Delete</button>
+    <div id="output"></div>
+    <script>
+        function libraryManager() {
+            let books = [];
+            return {
+                addBook: function(title, author) {
+                    books.push({ title, author });
+                    return `Book added: ${title} by ${author}`;
+                },
+                getBooks: function() {
+                    return books.map(b => `${b.title} by ${b.author}`).join('\n') || 'No books.';
+                },
+                updateBook: function(title, newAuthor) {
+                    const book = books.find(b => b.title === title);
+                    if (book) {
+                        book.author = newAuthor;
+                        return `Updated ${title} to new author: ${newAuthor}`;
+                    }
+                    return 'Book not found.';
+                },
+                deleteBook: function(title) {
+                    const initialLength = books.length;
+                    books = books.filter(b => b.title !== title);
+                    return initialLength !== books.length ? `Deleted book: ${title}` : 'Book not found.';
+                }
+            };
+        }
+        const lib = libraryManager();
+        function addBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            document.getElementById('output').textContent = lib.addBook(title, author);
+        }
+        function getBooks() {
+            document.getElementById('output').textContent = lib.getBooks();
+        }
+        function updateBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            document.getElementById('output').textContent = lib.updateBook(title, author);
+        }
+        function deleteBook() {
+            const title = document.getElementById('title').value;
+            document.getElementById('output').textContent = lib.deleteBook(title);
+        }
+    </script>
+</body>
+</html>

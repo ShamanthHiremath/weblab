@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translate Text</title>
+</head>
+<body>
+    <h3>Enter text:</h3>
+    <input type="text" id="inputText">
+    <button onclick="handleTranslate()">Translate</button>
+    <div id="output"></div>
+    <script>
+        function translate(text) {
+            const vowels = "aeiouAEIOU";
+            let result = "";
+            for (let char of text) {
+                if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+                    if (!vowels.includes(char)) {
+                        result += char + 'o' + char.toLowerCase();
+                    } else {
+                        result += char;
+                    }
+                } else {
+                    result += char;
+                }
+            }
+            return result;
+        }
+        function handleTranslate() {
+            const input = document.getElementById('inputText').value;
+            document.getElementById('output').textContent = translate(input);
+        }
+    </script>
+</body>
+</html>
